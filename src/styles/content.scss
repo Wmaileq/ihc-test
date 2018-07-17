@@ -6,6 +6,12 @@
   padding-bottom: 49px;
   padding-left: 275px;
   color: #fff;
+  @media (max-width: 1100px) {
+    padding-left: 175px;
+  }
+  @media (max-width: 960px) {
+    padding-left: 100px;
+  }
   &:after {
     content: '';
     position: absolute;
