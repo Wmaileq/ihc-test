@@ -3,9 +3,95 @@
 <head>
   <meta charset="UTF-8">
   <title>Title</title>
-  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/compiled.css">
 </head>
 <body>
+<div class="header">
+  <div class="header__burger"></div>
+  <div class="header__icons">
+    <span class="header__icon header__icon_message"></span>
+    <span class="header__icon header__icon_man"></span>
+  </div>
+  <span class="header__logo"></span>
+</div>
 
+<div class="content">
+  <div id="bg" class="content__bg"></div>
+  <div id="hint" class="content__hint">Для малого и среднего бизнеса</div>
+  <h2 id="heading" class="content__heading">Комплекс 24/7<br/> e-commerce решений</h2>
+  <button id="button" class="content__button">Все решения</button>
+</div>
+
+<div class="dots">
+  <span class="dot dot_active"></span>
+  <span class="dot"></span>
+  <span class="dot"></span>
+  <span class="dot"></span>
+  <span class="dot"></span>
+</div>
+<div class="footer">
+  <div class="footer__socials">
+    <span class="footer__social">Facebook</span>
+    <span class="footer__social">Instagram</span>
+    <span class="footer__social">Telegram</span>
+  </div>
+  <div class="footer__langs">
+    <span class="footer__lang footer__lang_usa footer__lang_active"></span>
+    <span class="footer__lang footer__lang_rus"></span>
+  </div>
+  <span class="footer__page">- 01</span>
+</div>
+<script src="./js/anime.min.js"></script>
+<script>
+  const TEXT = [
+    {hint: 'Для малого и среднего бизнеса', heading: 'Комплекс 24/7 решений', button: 'Все решения'},
+    {hint: 'Статистика и аналитика', heading: 'Сводка в реальном времени', button: 'Подробнее'},
+    {hint: 'Защита и шифрование данных', heading: 'Безопасность и обласное хранение', button: 'Подробнее'},
+  ];
+  let currentSlide = 0;
+  const hint = document.getElementById('hint');
+  const heading = document.getElementById('heading');
+  const button = document.getElementById('button');
+  const bg = document.getElementById('bg')
+  let isActive = false;
+  let hintAnimation = function(){
+    anime({
+      targets: hint,
+      translateX: [0, -800, 0],
+      duration: 2000
+    })
+  };
+  let bgAnimation = function(){
+    anime({
+      targets: bg,
+      translateY: [0, -2000, 0],
+      duration: 2000
+    })
+  };
+  document.addEventListener('wheel', function(e){
+    if (!isActive && e.deltaY > 0 && currentSlide < 2) {
+      isActive = true;
+      setTimeout(function(){
+        isActive = false;
+      }, 4000);
+      setTimeout(function(){
+        hint.innerHTML = TEXT[currentSlide].hint;
+      }, 1000);
+      currentSlide++;
+      hintAnimation();
+      bgAnimation();
+    } else if (!isActive && e.deltaY < 0 && currentSlide > 0) {
+      isActive = true;
+      setTimeout(function(){
+        isActive = false;
+      }, 4000);
+      setTimeout(function(){
+        hint.innerHTML = TEXT[currentSlide].hint;
+      }, 1000);
+      currentSlide--;
+      hintAnimation();
+    }
+  })
+</script>
 </body>
 </html>

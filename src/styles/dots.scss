@@ -1,0 +1,31 @@
+.dots {
+  position: fixed;
+  z-index: 100;
+  right: 82px;
+  top: 50%;
+  display: flex;
+  flex-direction: column;
+  transform: translateY(-50%);
+  .dot {
+    position: relative;
+    margin-bottom: 15px;
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    &:before {
+      content: '';
+      position: absolute;
+      left: 6px;
+      top: 6px;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background-color: #fff;
+      opacity: 0.2;
+      transition: opacity 0.2s;
+    }
+    &_active:before, &:hover:before {
+      opacity: 1;
+    }
+  }
+}

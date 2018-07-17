@@ -5,6 +5,8 @@ const gulp = require('gulp'),
   sass = require('gulp-sass'),
   rigger = require('gulp-rigger'),
   cssmin = require('gulp-minify-css'),
+  notify = require('gulp-notify'),
+  concatcss = require('gulp-concat-css'),
   browserSync = require("browser-sync"),
   reload = browserSync.reload;
 
@@ -25,21 +27,27 @@ gulp.task('js', function() {
 
 gulp.task('scss', function() {
   gulp.src('src/styles/*.scss')
-    .pipe(sass())
+    .pipe(sass().on('error', notify.onError(
+      {
+        message: '<%= error.message %>',
+        title: 'Sass error!'
+      }
+    )))
     .pipe(prefixer())
     .pipe(cssmin())
+    .pipe(concatcss('compiled.css'))
     .pipe(gulp.dest('build/css/'))
     .pipe(reload({stream: true}))
 });
 
 gulp.task('imgs', function() {
-  gulp.src('src/img/*.*')
-    .pipe(gulp.dest('src/img/'))
+  gulp.src('src/img/**/*.*')
+    .pipe(gulp.dest('build/img/'))
 });
 
 gulp.task('fonts', function() {
   gulp.src('src/fonts/*.*')
-    .pipe(gulp.dest('src/fonts/'))
+    .pipe(gulp.dest('build/fonts/'))
 });
 
 gulp.task('build', [
@@ -60,7 +68,7 @@ gulp.task('watch', function(){
   watch(['src/js/*.js'], function() {
     gulp.start('js');
   });
-  watch(['src/img/*.*'], function() {
+  watch(['src/img/**/*.*'], function() {
     gulp.start('imgs');
   });
   watch(['src/fonts/*.*'], function() {
